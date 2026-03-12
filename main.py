@@ -20,7 +20,7 @@ drop_weapons = [
     "熔铸火焰", "使命必达",
     "仰止", "迷失荒野", "布道自由",
     "O.B.J.迅极", "O.B.J.轻芒",
-    "典范",
+    "典范", "黯色火炬",
     "作品：众生",
     "浪潮", "淬火者", "工业零点一", "荧光雷羽", "长路",
 ]
@@ -72,6 +72,11 @@ field_5 = {
     "基础": ["敏捷", "力量", "意志", "智识", "主能力"],
     "附加": ["攻击", "生命", "电磁", "寒冷", "暴击", "终结技", "法术", "治疗"],
     "技能": ["强攻", "粉碎", "残暴", "医疗", "切骨", "迸发", "夜幕", "流转"]
+}
+field_6 = {
+    "基础": ["敏捷", "力量", "意志", "智识", "主能力"],
+    "附加": ["生命", "物理", "电磁", "寒冷", "源石技艺", "终结技", "法术", "治疗"],
+    "技能": ["压制", "粉碎", "昂扬", "巧技", "医疗", "切骨", "迸发", "夜幕"]
 }
 
 weapons = {
@@ -506,6 +511,7 @@ if __name__ == "__main__":
     weapons_in_3 = []
     weapons_in_4 = []
     weapons_in_5 = []
+    weapons_in_6 = []
     for weapon in weapons.items():
         if (weapon[1]["技能"] in field_1["技能"]
                 and weapon[1]["附加"] in field_1["附加"]):
@@ -522,11 +528,15 @@ if __name__ == "__main__":
         if (weapon[1]["技能"] in field_5["技能"]
                 and weapon[1]["附加"] in field_5["附加"]):
             weapons_in_5.append(weapon)
+        if (weapon[1]["技能"] in field_6["技能"]
+                and weapon[1]["附加"] in field_6["附加"]):
+            weapons_in_6.append(weapon)
     weapons_in_1 = dict(weapons_in_1)
     weapons_in_2 = dict(weapons_in_2)
     weapons_in_3 = dict(weapons_in_3)
     weapons_in_4 = dict(weapons_in_4)
     weapons_in_5 = dict(weapons_in_5)
+    weapons_in_6 = dict(weapons_in_6)
     if detail:
         print("无刻写 最优策略：")
         print("-------------------------")
@@ -545,6 +555,9 @@ if __name__ == "__main__":
         print(f"能量淤积点5: 包含武器数量 {len(weapons_in_5)}")
         if weapon_detail:
             print(list(weapons_in_5.keys()))
+        print(f"能量淤积点6: 包含武器数量 {len(weapons_in_6)}")
+        if weapon_detail:
+            print(list(weapons_in_6.keys()))
 
     strategies_1 = {}
     max_counter_1 = 0
@@ -646,6 +659,26 @@ if __name__ == "__main__":
         if len(item[1].keys()) == max_counter_5:
             max_strategies_5.append(item[0])
 
+    strategies_6 = {}
+    max_counter_6 = 0
+    max_strategies_6 = []
+    for basic_1, basic_2, basic_3 in list(combinations(field_6["基础"], 3)):
+        for add_or_skill in (field_6["附加"] + field_6["技能"]):
+            counter = 0
+            weapon_list = []
+            for weapon in weapons_in_6.items():
+                if (weapon[1]["基础"] in [basic_1, basic_2, basic_3]
+                        and (weapon[1]["附加"] in add_or_skill or weapon[1]["技能"] in add_or_skill)):
+                    counter += 1
+                    weapon_list.append(weapon)
+            if counter > 0:
+                strategies_6[f"{basic_1}, {basic_2}, {basic_3}, {add_or_skill}"] = dict(weapon_list)
+            if counter > max_counter_6:
+                max_counter_6 = counter
+    for item in strategies_6.items():
+        if len(item[1].keys()) == max_counter_6:
+            max_strategies_6.append(item[0])
+
     if detail:
         print("\n有刻写 局部最优策略: ")
         print("-------------------------")
@@ -679,6 +712,12 @@ if __name__ == "__main__":
             if weapon_detail:
                 print(list(strategies_5[max_strategy_5].keys()))
 
+        print("能量淤积点6: ")
+        for max_strategy_6 in max_strategies_6:
+            print(f"{max_strategy_6}，包含武器数量 {max_counter_6}")
+            if weapon_detail:
+                print(list(strategies_6[max_strategy_6].keys()))
+
     if query_weapon not in weapons:
         raise ValueError("查询武器输入错误")
     max_counter = 0
@@ -698,6 +737,9 @@ if __name__ == "__main__":
     for item in strategies_5.items():
         if query_weapon in item[1].keys():
             max_counter = max(max_counter, len(item[1].keys()))
+    for item in strategies_6.items():
+        if query_weapon in item[1].keys():
+            max_counter = max(max_counter, len(item[1].keys()))
     for item in strategies_1.items():
         if query_weapon in item[1].keys() and len(item[1].keys()) == max_counter:
             max_strategy.append((1, item[0]))
@@ -713,6 +755,9 @@ if __name__ == "__main__":
     for item in strategies_5.items():
         if query_weapon in item[1].keys() and len(item[1].keys()) == max_counter:
             max_strategy.append((5, item[0]))
+    for item in strategies_6.items():
+        if query_weapon in item[1].keys() and len(item[1].keys()) == max_counter:
+            max_strategy.append((6, item[0]))
 
     print(f"\n查询武器 {query_weapon} 全局最优策略: ")
     print("-------------------------")
@@ -728,6 +773,8 @@ if __name__ == "__main__":
             print(list(strategies_4[strategy[1]].keys()))
         elif strategy[0] == 5:
             print(list(strategies_5[strategy[1]].keys()))
+        elif strategy[0] == 6:
+            print(list(strategies_6[strategy[1]].keys()))
 
     if query_attributes[0] not in attributes_basic:
         raise ValueError("基础属性输入错误")
