@@ -823,7 +823,7 @@ class EndfieldOptimizer:
                     max_strategy.append((field_id, item[0]))
         return max_strategy
 
-    def get_query_weapon_result(self, weapon_name):
+    def get_query_weapon_strategy(self, weapon_name):
         """
         Get the best strategy result for one queried weapon.
 
@@ -851,7 +851,7 @@ class EndfieldOptimizer:
         weapon_name : str
             Name of the weapon to query.
         """
-        max_counter, max_strategy = self.get_query_weapon_result(weapon_name)
+        max_counter, max_strategy = self.get_query_weapon_strategy(weapon_name)
         print(f"\n查询武器 {weapon_name} 全局最优策略: ")
         print("-------------------------")
         for strategy in max_strategy:
