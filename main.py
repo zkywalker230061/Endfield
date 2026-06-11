@@ -51,47 +51,67 @@ attributes_skill = [
 field_1 = {
     "基础": ["敏捷", "力量", "意志", "智识", "主能力"],
     "附加": ["攻击", "灼热", "电磁", "寒冷", "自然", "源石技艺", "终结技", "法术"],
-    "技能": ["强攻", "压制", "追袭", "粉碎", "巧技", "迸发", "流转", "效益"]
+    "技能": ["强攻", "压制", "追袭", "粉碎", "巧技", "迸发", "流转", "效益"],
+    "name": "枢纽区"
 }
 field_2 = {
     "基础": ["敏捷", "力量", "意志", "智识", "主能力"],
     "附加": ["攻击", "物理", "电磁", "寒冷", "自然", "暴击", "终结技", "法术"],
-    "技能": ["压制", "追袭", "昂扬", "巧技", "附术", "医疗", "切骨", "效益"]
+    "技能": ["压制", "追袭", "昂扬", "巧技", "附术", "医疗", "切骨", "效益"],
+    "name": "源石研究园"
 }
 field_3 = {
     "基础": ["敏捷", "力量", "意志", "智识", "主能力"],
     "附加": ["生命", "物理", "灼热", "寒冷", "自然", "暴击", "终结技", "治疗"],
-    "技能": ["强攻", "压制", "巧技", "残暴", "附术", "迸发", "夜幕", "效益"]
+    "技能": ["强攻", "压制", "巧技", "残暴", "附术", "迸发", "夜幕", "效益"],
+    "name": "矿脉源区"
 }
 field_4 = {
     "基础": ["敏捷", "力量", "意志", "智识", "主能力"],
     "附加": ["攻击", "生命", "物理", "灼热", "自然", "暴击", "源石技艺", "治疗"],
-    "技能": ["追袭", "粉碎", "昂扬", "残暴", "附术", "医疗", "切骨", "流转"]
+    "技能": ["追袭", "粉碎", "昂扬", "残暴", "附术", "医疗", "切骨", "流转"],
+    "name": "供能高地"
 }
 field_5 = {
     "基础": ["敏捷", "力量", "意志", "智识", "主能力"],
     "附加": ["攻击", "生命", "电磁", "寒冷", "暴击", "终结技", "法术", "治疗"],
-    "技能": ["强攻", "粉碎", "残暴", "医疗", "切骨", "迸发", "夜幕", "流转"]
+    "技能": ["强攻", "粉碎", "残暴", "医疗", "切骨", "迸发", "夜幕", "流转"],
+    "name": "武陵城"
 }
 field_6 = {
     "基础": ["敏捷", "力量", "意志", "智识", "主能力"],
     "附加": ["生命", "物理", "电磁", "寒冷", "源石技艺", "终结技", "法术", "治疗"],
-    "技能": ["压制", "粉碎", "昂扬", "巧技", "医疗", "切骨", "迸发", "夜幕"]
+    "技能": ["压制", "粉碎", "昂扬", "巧技", "医疗", "切骨", "迸发", "夜幕"],
+    "name": "清波寨"
 }
 field_7 = {
     "基础": ["敏捷", "力量", "意志", "智识", "主能力"],
     "附加": ["攻击", "物理", "灼热", "电磁", "自然", "暴击", "终结技", "法术"],
-    "技能": ["强攻", "追袭", "昂扬", "残暴", "附术", "夜幕", "流转", "效益"]
+    "技能": ["强攻", "追袭", "昂扬", "残暴", "附术", "夜幕", "流转", "效益"],
+    "name": "首墩"
 }
 field_8 = {
     "基础": ["敏捷", "力量", "意志", "智识", "主能力"],
     "附加": ["生命", "灼热", "电磁", "寒冷", "自然", "源石技艺", "终结技", "治疗"],
-    "技能": ["压制", "粉碎", "巧技", "残暴", "附术", "切骨", "夜幕", "流转"]
+    "技能": ["压制", "粉碎", "巧技", "残暴", "附术", "切骨", "夜幕", "流转"],
+    "name": "试验园区"
 }
 field_9 = {
     "基础": ["敏捷", "力量", "意志", "智识", "主能力"],
     "附加": ["攻击", "生命", "物理", "灼热", "寒冷", "自然", "源石技艺", "治疗"],
-    "技能": ["强攻", "追袭", "昂扬", "巧技", "医疗", "切骨", "迸发", "效益"]
+    "技能": ["强攻", "追袭", "昂扬", "巧技", "医疗", "切骨", "迸发", "效益"],
+    "name": "藏剑谷"
+}
+field_map = {
+    1: field_1,
+    2: field_2,
+    3: field_3,
+    4: field_4,
+    5: field_5,
+    6: field_6,
+    7: field_7,
+    8: field_8,
+    9: field_9,
 }
 
 weapons = {
@@ -612,31 +632,31 @@ if __name__ == "__main__":
     if detail:
         print("无刻写 最优策略：")
         print("-------------------------")
-        print(f"能量淤积点1: 包含武器数量 {len(weapons_in_1)}")
+        print(f"{field_1['name']}: 包含武器数量 {len(weapons_in_1)}")
         if weapon_detail:
             print(list(weapons_in_1.keys()))
-        print(f"能量淤积点2: 包含武器数量 {len(weapons_in_2)}")
+        print(f"{field_2['name']}: 包含武器数量 {len(weapons_in_2)}")
         if weapon_detail:
             print(list(weapons_in_2.keys()))
-        print(f"能量淤积点3: 包含武器数量 {len(weapons_in_3)}")
+        print(f"{field_3['name']}: 包含武器数量 {len(weapons_in_3)}")
         if weapon_detail:
             print(list(weapons_in_3.keys()))
-        print(f"能量淤积点4: 包含武器数量 {len(weapons_in_4)}")
+        print(f"{field_4['name']}: 包含武器数量 {len(weapons_in_4)}")
         if weapon_detail:
             print(list(weapons_in_4.keys()))
-        print(f"能量淤积点5: 包含武器数量 {len(weapons_in_5)}")
+        print(f"{field_5['name']}: 包含武器数量 {len(weapons_in_5)}")
         if weapon_detail:
             print(list(weapons_in_5.keys()))
-        print(f"能量淤积点6: 包含武器数量 {len(weapons_in_6)}")
+        print(f"{field_6['name']}: 包含武器数量 {len(weapons_in_6)}")
         if weapon_detail:
             print(list(weapons_in_6.keys()))
-        print(f"能量淤积点7: 包含武器数量 {len(weapons_in_7)}")
+        print(f"{field_7['name']}: 包含武器数量 {len(weapons_in_7)}")
         if weapon_detail:
             print(list(weapons_in_7.keys()))
-        print(f"能量淤积点8: 包含武器数量 {len(weapons_in_8)}")
+        print(f"{field_8['name']}: 包含武器数量 {len(weapons_in_8)}")
         if weapon_detail:
             print(list(weapons_in_8.keys()))
-        print(f"能量淤积点9: 包含武器数量 {len(weapons_in_9)}")
+        print(f"{field_9['name']}: 包含武器数量 {len(weapons_in_9)}")
         if weapon_detail:
             print(list(weapons_in_9.keys()))
 
@@ -823,55 +843,55 @@ if __name__ == "__main__":
     if detail:
         print("\n有刻写 局部最优策略: ")
         print("-------------------------")
-        print("能量淤积点1: ")
+        print(f"{field_1['name']}: ")
         for max_strategy_1 in max_strategies_1:
             print(f"{max_strategy_1}，包含武器数量 {max_counter_1}")
             if weapon_detail:
                 print(list(strategies_1[max_strategy_1].keys()))
 
-        print("能量淤积点2: ")
+        print(f"{field_2['name']}: ")
         for max_strategy_2 in max_strategies_2:
             print(f"{max_strategy_2}，包含武器数量 {max_counter_2}")
             if weapon_detail:
                 print(list(strategies_2[max_strategy_2].keys()))
 
-        print("能量淤积点3: ")
+        print(f"{field_3['name']}: ")
         for max_strategy_3 in max_strategies_3:
             print(f"{max_strategy_3}，包含武器数量 {max_counter_3}")
             if weapon_detail:
                 print(list(strategies_3[max_strategy_3].keys()))
 
-        print("能量淤积点4: ")
+        print(f"{field_4['name']}: ")
         for max_strategy_4 in max_strategies_4:
             print(f"{max_strategy_4}，包含武器数量 {max_counter_4}")
             if weapon_detail:
                 print(list(strategies_4[max_strategy_4].keys()))
 
-        print("能量淤积点5: ")
+        print(f"{field_5['name']}: ")
         for max_strategy_5 in max_strategies_5:
             print(f"{max_strategy_5}，包含武器数量 {max_counter_5}")
             if weapon_detail:
                 print(list(strategies_5[max_strategy_5].keys()))
 
-        print("能量淤积点6: ")
+        print(f"{field_6['name']}: ")
         for max_strategy_6 in max_strategies_6:
             print(f"{max_strategy_6}，包含武器数量 {max_counter_6}")
             if weapon_detail:
                 print(list(strategies_6[max_strategy_6].keys()))
 
-        print("能量淤积点7: ")
+        print(f"{field_7['name']}: ")
         for max_strategy_7 in max_strategies_7:
             print(f"{max_strategy_7}，包含武器数量 {max_counter_7}")
             if weapon_detail:
                 print(list(strategies_7[max_strategy_7].keys()))
 
-        print("能量淤积点8: ")
+        print(f"{field_8['name']}: ")
         for max_strategy_8 in max_strategies_8:
             print(f"{max_strategy_8}，包含武器数量 {max_counter_8}")
             if weapon_detail:
                 print(list(strategies_8[max_strategy_8].keys()))
 
-        print("能量淤积点9: ")
+        print(f"{field_9['name']}: ")
         for max_strategy_9 in max_strategies_9:
             print(f"{max_strategy_9}，包含武器数量 {max_counter_9}")
             if weapon_detail:
@@ -939,7 +959,7 @@ if __name__ == "__main__":
     print(f"\n查询武器 {query_weapon} 全局最优策略: ")
     print("-------------------------")
     for strategy in max_strategy:
-        print(f"能量淤积点{strategy[0]}, {strategy[1]}，包含武器数量: {max_counter}")
+        print(f"{field_map[strategy[0]]["name"]}, {strategy[1]}，包含武器数量: {max_counter}")
         if strategy[0] == 1:
             print(list(strategies_1[strategy[1]].keys()))
         elif strategy[0] == 2:
