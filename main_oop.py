@@ -11,8 +11,8 @@ from itertools import combinations
 detail = False
 # 是否显示 无刻写最优策略 和 有刻写局部最优策略 的具体武器列表
 weapon_detail = False
-# # 是否查询所有武器的全局最优策略
-# all_weapons = False
+# 是否查询所有武器的全局最优策略
+all_weapons = False
 
 # 想要查询的武器
 query_weapon = "负山"
@@ -581,12 +581,9 @@ weapons = {
     },
 }
 
-for drop_weapon in drop_weapons:
-    weapons.pop(drop_weapon)
-
-# if not all_weapons:
-#     for drop_weapon in drop_weapons:
-#         weapons.pop(drop_weapon)
+if not all_weapons:
+    for drop_weapon in drop_weapons:
+        weapons.pop(drop_weapon, None)
 
 
 class EndfieldOptimizer:
@@ -764,66 +761,98 @@ class EndfieldOptimizer:
                 if weapon_detail:
                     print(list(self.strategies[field_id][max_strategy].keys()))
 
-    def check_query_weapon(self):
+    def check_query_weapon(self, weapon_name):
         """
         Check whether the queried weapon exists.
+
+        Parameters
+        ----------
+        weapon_name : str
+            Name of the weapon to query.
 
         Raises
         ------
         ValueError
-            Raised when the global variable ``query_weapon`` is not in the weapon dictionary.
+            Raised when ``weapon_name`` is not in the weapon dictionary.
         """
-        if query_weapon not in self.weapons:
+        if weapon_name not in self.weapons:
             raise ValueError("查询武器输入错误")
 
-    def get_query_weapon_max_counter(self):
+    def get_query_weapon_max_counter(self, weapon_name):
         """
-        Get the global maximum covered count for the queried weapon.
+        Get the global maximum covered count for one queried weapon.
+
+        Parameters
+        ----------
+        weapon_name : str
+            Name of the weapon to query.
 
         Returns
         -------
         int
-            The maximum number of covered weapons among strategies that contain the queried weapon.
+            Maximum number of covered weapons among strategies containing the weapon.
         """
         max_counter = 0
         for field_id in self.fields:
             for item in self.strategies[field_id].items():
-                if query_weapon in item[1].keys():
+                if weapon_name in item[1].keys():
                     max_counter = max(max_counter, len(item[1].keys()))
         return max_counter
 
-    def get_query_weapon_max_strategy(self, max_counter):
+    def get_query_weapon_max_strategy(self, weapon_name, max_counter):
         """
-        Get global optimal strategies for the queried weapon.
+        Get global optimal strategies for one queried weapon.
 
         Parameters
         ----------
+        weapon_name : str
+            Name of the weapon to query.
         max_counter : int
             Global maximum covered count for the queried weapon.
 
         Returns
         -------
         list
-            A list of two-item tuples. Each tuple contains the field ID and the strategy name.
+            A list of two-item tuples. Each tuple contains the field ID and strategy name.
         """
         max_strategy = []
         for field_id in self.fields:
             for item in self.strategies[field_id].items():
-                if (query_weapon in item[1].keys()
+                if (weapon_name in item[1].keys()
                         and len(item[1].keys()) == max_counter):
                     max_strategy.append((field_id, item[0]))
         return max_strategy
 
-    def print_query_weapon_strategy(self):
+    def get_query_weapon_result(self, weapon_name):
         """
-        Print global optimal strategies for the queried weapon.
+        Get the best strategy result for one queried weapon.
 
-        Results are printed to standard output.
+        Parameters
+        ----------
+        weapon_name : str
+            Name of the weapon to query.
+
+        Returns
+        -------
+        tuple
+            A tuple of ``(max_counter, max_strategy)``.
         """
-        self.check_query_weapon()
-        max_counter = self.get_query_weapon_max_counter()
-        max_strategy = self.get_query_weapon_max_strategy(max_counter)
-        print(f"\n查询武器 {query_weapon} 全局最优策略: ")
+        self.check_query_weapon(weapon_name)
+        max_counter = self.get_query_weapon_max_counter(weapon_name)
+        max_strategy = self.get_query_weapon_max_strategy(weapon_name, max_counter)
+        return max_counter, max_strategy
+
+    def print_query_weapon_strategy(self, weapon_name):
+        """
+        Print global optimal strategies for one queried weapon.
+
+        Parameters
+        ----------
+        weapon_name : str
+            Name of the weapon to query.
+        """
+        max_counter, max_strategy = self.get_query_weapon_result(weapon_name)
+        print(f"\n查询武器 {weapon_name} 全局最优策略: ")
         print("-------------------------")
         for strategy in max_strategy:
             field_id = strategy[0]
@@ -833,6 +862,18 @@ class EndfieldOptimizer:
                 f"包含武器数量: {max_counter}"
             )
             print(list(self.strategies[field_id][strategy_name].keys()))
+
+    def print_query_weapons_strategy(self):
+        """
+        Print global optimal strategies for one weapon or all weapons.
+
+        The global variable ``all_weapons`` controls whether all weapons are queried.
+        """
+        if all_weapons:
+            for weapon_name in self.weapons:
+                self.print_query_weapon_strategy(weapon_name)
+            return
+        self.print_query_weapon_strategy(query_weapon)
 
     def check_query_attributes(self):
         """
@@ -895,15 +936,9 @@ class EndfieldOptimizer:
         self.get_strategies_in_fields()
         self.print_strategies_in_fields()
 
-        self.print_query_weapon_strategy()
+        self.print_query_weapons_strategy()
 
         self.print_weapons_with_query_attributes()
-
-        # if all_weapons:
-        #     for weapon in weapons:
-        #         global query_weapon
-        #         query_weapon = weapon
-        #         self.print_query_weapon_strategy()
 
 
 if __name__ == "__main__":
