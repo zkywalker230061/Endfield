@@ -11,6 +11,8 @@ from itertools import combinations
 detail = False
 # 是否显示 无刻写最优策略 和 有刻写局部最优策略 的具体武器列表
 weapon_detail = False
+# # 是否查询所有武器的全局最优策略
+# all_weapons = False
 
 # 想要查询的武器
 query_weapon = "负山"
@@ -582,6 +584,10 @@ weapons = {
 for drop_weapon in drop_weapons:
     weapons.pop(drop_weapon)
 
+# if not all_weapons:
+#     for drop_weapon in drop_weapons:
+#         weapons.pop(drop_weapon)
+
 
 class EndfieldOptimizer:
     """
@@ -892,6 +898,12 @@ class EndfieldOptimizer:
         self.print_query_weapon_strategy()
 
         self.print_weapons_with_query_attributes()
+
+        # if all_weapons:
+        #     for weapon in weapons:
+        #         global query_weapon
+        #         query_weapon = weapon
+        #         self.print_query_weapon_strategy()
 
 
 if __name__ == "__main__":
