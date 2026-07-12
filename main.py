@@ -1,5 +1,6 @@
 """
 File to analyse Endfield.
+NOTE: no longer maintained after 2026-6-11, use main_oop.py instead.
 
 Chengyun Zhu
 2026-2-9
