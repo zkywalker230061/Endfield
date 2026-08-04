@@ -32,7 +32,7 @@ query_attributes = [
     "生命",  # 附加属性
     "效益",  # 技能属性
 ]
-# Update: 负山, 赤缨, 遥望, 白夜新星
+# Update: 赤缨
 
 
 attributes_basic = [
