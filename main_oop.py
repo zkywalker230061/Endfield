@@ -43,7 +43,7 @@ query_attributes = [
     "治疗",  # 附加属性
     "医疗",  # 技能属性
 ]
-# Update: 热熔切割器, 十二问, 理性告别, 镀红祝福
+# Update: 热熔切割器, 理性告别
 
 
 attributes_basic = [
